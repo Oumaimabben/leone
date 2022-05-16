@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>acceuil</title>
+            </f:facet>
+            <h:outputStylesheet name="./css/cssLayout.css"/>
+        </h:head>
+
+        <h:body>
+            <p:layout fullPage="true">
+                <p:layoutUnit  position="north"
+            resizable="false" closable="false" collapsible="false">
+             
+             <p:toolbar style="height:39px;">
+                <f:facet name="left">
+                  <h:link  rendered="#{utilisateurBean.isAdmin()}"   outcome="adminPage" value="Page d'administration"  style="color: blue " />   
+                </f:facet>
+            </p:toolbar>
+        </p:layoutUnit>
+               
+
+                <p:layoutUnit position="south" size="120" closable="true" collapsible="true">
+                    <ui:insert name="footer">
+                        <h:form>
+                            <h:link  rendered="#{utilisateurBean.isAdmin()}"   outcome="adminPage" value="Page d'administration"  style="color: blue " /> 
+                             <h:link  rendered="#{utilisateurBean.isAdmin()}"   outcome="Motdepasse" value="changer mot de passe" style="color: blue ;margin-left: 10px;" /> 
+                              
+                         <p:commandLink value="Déconnecter"   action="#{utilisateurBean.logout()}"  style="color: blue;margin-left: 10px;"/>
+                               
+                              
+                        </h:form>
+                    </ui:insert>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="west" size="400"  resizable="true" header=" Menu Principale" collapsible="true" >
+                    <h:form>
+                        <p:panelMenu >  
+                            <p:submenu label="Sortie de bien société(sortie avec retour)"  >  
+                                <p:menuitem  title="Ajout une autorisation " outcome="AjoutSB1"   value="Ajouter une autorisation de sortie"  icon="ui-icon-plus"/>  
+                                
+                                <p:menuitem  value="Valider les autorisations " outcome="validSB1" title="valider les autorisations"  icon="ui-icon-check"/>  
+                            </p:submenu>  
+                            <p:submenu label="Entrée ou Sortie de bien personnel" >  
+                                <p:menuitem   value="Ajouter une autorisation de sortie" outcome="AjoutSBPers" title="Ajout une autorisation "   icon="ui-icon-plus"/>  
+                                <p:menuitem  value="Valider les autorisations" outcome="validSBPers" title="valider les autorisations"  icon="ui-icon-check"/>  
+                            </p:submenu> 
+                            
+                             <p:submenu label="Declaration mise en Rebut" >  
+                                <p:menuitem   value="Ajouter une autorisation mise en Rebut" outcome="AjoutRebut" title="Ajout une autorisation mise en Rebut "   icon="ui-icon-plus"/>  
+                                <p:menuitem  value="Valider les autorisations " outcome="validRebut" title="valider les autorisations "  icon="ui-icon-check"/>  
+                            </p:submenu> 
+                             <p:submenu label="Transfert d'equipement" >  
+                                <p:menuitem   value="Ajouter une autorisation Transfert d'equipement" outcome="AjoutTransfert" title="Ajout une autorisation Transfert d'equipement "   icon="ui-icon-plus"/>  
+                                <p:menuitem  value="Valider les autorisations " outcome="validTransfert" title="valider les autorisations "  icon="ui-icon-check"/>  
+                            </p:submenu> 
+                              
+                            <p:submenu label="Historique"  >
+                               </p:submenu> 
+                            <p:submenu label="Declaration de Retour"  >
+                                <p:menuitem  value="Declaration de Retour" outcome="DeclarationRetour"  icon="ui-icon-plus"/>     
+                            </p:submenu> 
+                            
+                        </p:panelMenu >  
+                    </h:form>
+                </p:layoutUnit>
+
+
+                <p:layoutUnit position="center">
+
+                    <ui:insert name="content"> </ui:insert>
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+

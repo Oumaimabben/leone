@@ -1,0 +1,67 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    
+    <h:head>
+        <title>Gérer utilisateur</title>
+        
+    </h:head> 
+    
+    <h:body> 
+       <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+               <f:view>
+                   <h:form>
+                     
+                       <h2 style="color: darkblue"> <center><h:outputText value="Modifier Utilisateur"/> </center></h2>
+                       <center>
+                       
+                       
+                       <p:panelGrid columns="2">
+                           <p:outputLabel value="Matricule:" for="idUtilisateur"  />
+                           <p:inputText id="idUtilisateur" readonly="true" value="#{utilisateurBean.utilisateurChoisit.idUtilisateur}" title="IdUtilisateur" required="true" requiredMessage="Id est obligatoire." style="width: 350px"/>
+                           <p:outputLabel value="Nom:" for="utilisateurNom" />
+                           <p:inputText id="utilisateurNom" value="#{utilisateurBean.utilisateurChoisit.utilisateurNom}" title="UtilisateurNom" required="true" requiredMessage="Nom est obligatoire." style="width: 350px" />
+                           <p:outputLabel value="Prenom:" for="utilisateurPrenom" />
+                           <p:inputText id="utilisateurPrenom" value="#{utilisateurBean.utilisateurChoisit.utilisateurPrenom}" title="UtilisateurPrenom" required="true" requiredMessage="le Prenom est obligatoire." style="width: 350px"/>
+                           
+                           <p:outputLabel value="Email:" for="email" />
+                           <p:inputText id="email" value="#{utilisateurBean.utilisateurChoisit.email}" title="Email" required="true" requiredMessage="Email est obligatoire." style="width: 350px"/>
+                           <p:outputLabel value="Type:" for="userType" /> 
+                           <p:selectOneMenu id="userType" var="usertype" value="#{utilisateurBean.utilisateurChoisit.usertype}" required="true" requiredMessage="le Type est obligatoire." style="width: 350px">
+                               <f:selectItem noSelectionOption="true" itemLabel="Choisir le type d'utilisateur" itemValue="" />  
+                                    <f:selectItem itemLabel="Administrateur" itemValue="admin" />  
+                                    <f:selectItem itemLabel="Utilisateur" itemValue="user" />  
+                                </p:selectOneMenu>
+                           
+                           <p:outputLabel value="Fonction:" for="fonctionDesigFct" />
+                           <p:selectOneMenu id="fonctionDesigFct" value="#{utilisateurBean.utilisateurChoisit.fonctionIdFct.desigFct}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="La fonction est obligatoire." style="width: 350px">
+                               <!-- TODO: update below reference to list of available items-->
+                               <f:selectItems value="#{fonctionBean.findAll()}" var="f" itemValue="#{f}"/>
+                           </p:selectOneMenu>
+                           <p:outputLabel value="Service:" for="serviceDesigService" />
+                           <p:selectOneMenu id="serviceDesigService" value="#{utilisateurBean.utilisateurChoisit.serviceIdService.desigService}" converter="omnifaces.SelectItemsConverter"  required="true" requiredMessage="Le Serviceest obligatoire." style="width: 350px">
+                               <!-- TODO: update below reference to list of available items-->
+                               <f:selectItems value="#{serviceBean.findAll()}" var="ser" itemValue="#{ser}"/>
+                           </p:selectOneMenu> 
+                           <p:growl id="growl" showDetail="true"  transient="true" /> 
+                           <p:panelGrid columns="2">
+                               <p:commandButton id="valider"  actionListener="#{utilisateurBean.edit()}" update="growl"  value="Modifier" style="color: blue"/>
+                            <h:link  value="Liste des utilisateurs" outcome="listUtilisateur" title="Liste des utilisateurs" style="color: blue "  />
+                          </p:panelGrid>
+                       </p:panelGrid>
+                  </center>
+                   </h:form>
+               </f:view>
+
+            </ui:define>
+       </ui:composition>
+                
+    </h:body>
+    
+    
+    
+    </html>

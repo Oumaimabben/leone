@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>liste b1 personnel</title>
+        
+    </h:head> 
+    <h:body>
+        
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <center>  <h3 style="color: darkblue"><h:outputText value="Listes des Autorisations de sortie de bien personnel"/></h3> </center>
+                        <p:dataTable value="#{sortieB1persBean.findInvalidatedAut()}" var="item" >
+                            <p:column headerText="Voir" style="width:4%">  
+                                <p:commandButton id="selectButton2"  action="voirSBPersonnel?faces-redirect=true" icon="ui-icon-search" title="Voir">  
+                                    <f:setPropertyActionListener value="#{item}" target="#{sortieB1persBean.sortieB1persChoisit}" />  
+                                </p:commandButton>  
+                            </p:column>  
+                            <p:column headerText="Id"  filterBy="#{item.idsortieB1personnel}">
+                                <h:outputText value="#{item.idsortieB1personnel}"/>
+                            </p:column>
+                            
+                              <p:column filterBy="#{item.utilisateuridUtilisateur.utilisateurNom}" >
+                                <f:facet name="header">
+                                    <h:outputText value="Demandeur"/>
+                                </f:facet>
+                                <h:outputText value="#{item.utilisateuridUtilisateur.utilisateurNom} #{item.utilisateuridUtilisateur.utilisateurPrenom}  "/>
+                            </p:column>
+                            
+                            <p:column headerText="Fonction" filterBy="#{item.utilisateuridUtilisateur.fonctionIdFct.desigFct}">
+                                <h:outputText value="#{item.utilisateuridUtilisateur.fonctionIdFct.desigFct}"/>
+                            </p:column>
+                            <p:column headerText="Service" filterBy="#{item.utilisateuridUtilisateur.serviceIdService.desigService}">
+                                <h:outputText value="#{item.utilisateuridUtilisateur.serviceIdService.desigService}"/>
+                            </p:column>
+                           
+                            <p:column headerText="NatureBien" filterBy="#{item.biensIdBiens.natureBien} ">
+                                <h:outputText value="#{item.biensIdBiens.natureBien}" />
+                            </p:column>
+                            
+                        
+                            
+                            
+                            <p:column headerText="Quantite" filterBy="#{item.quantite} ">
+                                <h:outputText value="#{item.quantite}"/>
+                            </p:column>
+                            <p:column  filterBy="#{item.destination}">
+                                <f:facet name="header">
+                                    <h:outputText value="Destination"/>
+                                </f:facet>
+                                <h:outputText value="#{item.destination}"/>
+                            </p:column>
+                            
+                            
+                            <p:column filterBy="#{item.prenomT} " >
+                            <f:facet name="header">
+                                <h:outputText value="Transporteur"/>
+                            </f:facet>
+                            <h:outputText value=" #{item.prenomT} #{item.nomT} "/>
+                        </p:column>
+                        
+                            <p:column filterBy="#{item.institut} " >
+                            <f:facet name="header">
+                                <h:outputText value="Institut"/>
+                            </f:facet>
+                                <h:outputText value=" #{item.institut}"/>
+                            </p:column>
+                            <p:column filterBy="#{item.typeStageIdtypeStage.typeStage} " >
+                            <f:facet name="header">
+                                <h:outputText value="Type stage"/>
+                            </f:facet>
+                                <h:outputText value=" #{item.typeStageIdtypeStage.typeStage}"/>
+                            </p:column>
+                        
+                        
+                       
+                            
+                            <p:column style="text-align: center">
+                                <f:facet name="header">
+                                    <h:outputText value="Validation G"/>
+                                </f:facet>
+
+                                <p:selectBooleanCheckbox value="#{item.validationG }" disabled="true"/>
+
+                            </p:column>
+
+                         
+                            
+                        </p:dataTable>
+                    </h:form>
+                </f:view>
+
+            </ui:define>
+           
+        </ui:composition>
+    </h:body>
+</html>
+

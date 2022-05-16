@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title> 
+    </h:head>
+    <h:body  style="background-color: #9999ff; " >
+        <center>
+        <p:panelGrid columns="2" style="background-color: #9999ff; height: 680px; width: 800px;" >
+            <h:graphicImage name="./secur1.jpg"  alt="logoLeoni" style="height: 620px"/>
+            <p:column>
+                <center> <h2 style="color: darkblue"> Page d'authentification </h2> </center>
+                <br/>
+        <br/>
+        
+        <br/>
+        <form method="post" action="j_security_check" name="loginForm">
+            
+            <h:panelGrid columns="2">
+                <h:outputLabel id="userNameLabel" for="j_username" value="Matricule:"/>
+                <p:inputMask mask="9?999999" id="j_username"  />
+               
+                <h:outputLabel id="passwordLabel" for="j_password" value="mot de passe:"/>
+                <p:password id="j_password" autocomplete="off" />
+                <div/>
+                <h:panelGroup>
+                    <h:commandButton type="submit" value="connecter" style=" color: blue ; width: 100px"/>
+                    <h:commandButton type="reset" value="Vider" style=" color: blue ; width: 100px"/>
+                      
+                </h:panelGroup>
+            </h:panelGrid>
+                
+        </form>
+                </p:column>
+            </p:panelGrid>
+            </center>
+    </h:body>
+</html>

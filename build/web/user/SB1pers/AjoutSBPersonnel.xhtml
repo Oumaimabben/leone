@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+     
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Ajouter une Autorisation de Sortie de bien personnel</title>
+        
+        
+    </h:head>  
+    <h:body>
+        
+
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+
+
+
+                <h:form id="form1">
+
+                    <h3 style="color: darkblue"><h:outputText style="position: relative; left: 400px;" value="Autorisation de sortie de bien personnel"/></h3>
+
+                    <h4><p:outputLabel style="position: relative; left: 920px;" value="Autorisation N°: #{sortieB1persBean.nextId}"/></h4>
+                    <p:panelGrid columns="2">
+                        <p:panelGrid columns="2" style="height: 500px ; width: 540px">
+
+                            <p:outputLabel value="Demandeur :" for="demandeur" />
+                            <p:outputLabel value=" #{utilisateurBean.find().utilisateurNom} #{utilisateurBean.find().utilisateurPrenom}" id="demandeur" />
+                            <p:outputLabel value="Service :" for="service" />
+                            <p:outputLabel value="#{utilisateurBean.find().serviceIdService.desigService}" id="service" />
+                            <p:outputLabel value="Fonction" for="fonction" />
+                            <p:outputLabel value=" #{utilisateurBean.find().fonctionIdFct.desigFct}" id="fonction" />
+
+                            <p:outputLabel value="Nature Bien: *"   />
+                            <p:inputText value="#{sortieB1persBean.bien.natureBien}"  required="true" requiredMessage="La nature bien est obligatoire." style="width:  300px"   >
+                                <p:ajax event="change" update="panel"  />
+                            </p:inputText> 
+
+
+                            <p:outputLabel value="Quantite:" for="quantite" />
+                            <p:spinner id="quantite" value="#{sortieB1persBean.quantite}"  min="1" title="Quantite" required="true" requiredMessage="La Quantité est obligatoire." style="width:  300px" >
+                                <p:ajax update="panel" process="@this" /> 
+                            </p:spinner>
+
+                            <p:outputLabel value="Destination :" for="destination" />
+                            <p:inputText id="destination" value="#{sortieB1persBean.sortieB1pers.destination}" title="Destination" required="true" requiredMessage="Destination est obligatoire." style="width: 300px"/>
+                            <p:outputLabel value="Observations:" for="observation" />
+                            <p:inputTextarea id="observation" value="#{sortieB1persBean.sortieB1pers.observation}" title="Observation" rows="6" cols="34" /> 
+
+                        </p:panelGrid >
+                        <p:panelGrid columns="2" style="height: 250px ;">
+                            <f:facet name="header">
+                                Données Transporteur 
+                            </f:facet>
+
+
+                            <p:outputLabel value="Nom Transporteur:" for="nomT" />
+                            <p:inputText id="nomT" value="#{sortieB1persBean.sortieB1pers.nomT}" title="Nom Transporteur" required="true" requiredMessage="le Nom Transporteur est obligatoire." style="width: 300px"/>
+                            <p:outputLabel value="Prénom Transporteur:" for="prenomT" />
+                            <p:inputText id="prenomT" value="#{sortieB1persBean.sortieB1pers.prenomT}" title="Prenom Transporteur" required="true" requiredMessage="le Prenom Transporteur est obligatoire." style="width: 300px"/>
+                            <p:outputLabel value="Institut :" for="institut" />
+                            <p:inputText id="institut" value="#{sortieB1persBean.sortieB1pers.institut}" title="Institut:" required="true" requiredMessage="Institut est obligatoire." style="width: 300px"/>
+
+                            <p:outputLabel value="Type de stage:" for="typeStage" />
+                            <p:selectOneMenu id="typeStage" value="#{sortieB1persBean.sortieB1pers.typeStageIdtypeStage}" converter="omnifaces.SelectItemsConverter" required="true" requiredMessage="le typeStage est obligatoire." style="width: 300px">
+                                <f:selectItem itemLabel="Choisir le type de stage" itemValue="" />  
+                                <f:selectItems value="#{typeStageFacade.allTypeStage()}"/>
+                            </p:selectOneMenu>
+
+
+
+                            <p:outputLabel value="Date debut:" for="datedebut"  />
+                            <p:calendar  value="#{sortieB1persBean.sortieB1pers.datedebut}" mindate="#{sortieB1persBean.currentDate}" id="datedebut" showOn="button" lang="fr" required="true" requiredMessage="La date de debut est obligatoire." style="width:  350px">
+
+                            </p:calendar>
+
+
+                            <p:outputLabel value="Date fin:" for="datefin"  />
+                            <p:calendar  value="#{sortieB1persBean.sortieB1pers.datefin}" mindate="#{sortieB1persBean.currentDate}" id="datefin" showOn="button" lang="fr" required="true" requiredMessage="La date de fin est obligatoire." style="width:  350px">
+
+                            </p:calendar>
+                            <p:outputLabel value="Accord de stage:" for="accordRefus" title="Accord de stage:" />
+                            <p:selectOneMenu id="accordRefus"  value="#{sortieB1persBean.sortieB1pers.accordRefus}"  required="true" requiredMessage="accord est obligatoire." style="width: 300px">
+                                <f:selectItem itemLabel="choisir l'accord"  itemValue="#{null}" /> 
+                                <f:selectItem itemLabel="Accord" itemValue="#{true}" />  
+                                <f:selectItem itemLabel="Refus" itemValue="#{false}" />  
+
+                            </p:selectOneMenu>
+
+
+                            <p:outputLabel value="Remarques:" for="remarque" />
+                            <p:inputTextarea id="remarque" value="#{sortieB1persBean.sortieB1pers.remarque}" title="Observation" rows="6" cols="30" /> 
+
+
+
+                            <h:selectOneMenu rendered="false" id="utilisateuridUtilisateur" value="#{sortieB1persBean.sortieB1pers.utilisateuridUtilisateur}" converter="omnifaces.SelectItemsConverter" title="UtilisateuridUtilisateur" required="true" requiredMessage="The idUtilisateur est obligatoire.">
+                                <!-- TODO: update below reference to list of available items-->
+                                <f:selectItem  itemValue="#{utilisateurBean.find()}"/>
+                            </h:selectOneMenu>
+                        </p:panelGrid>
+
+
+                    </p:panelGrid>
+
+                    <p:growl id="growl" showDetail="true"  transient="true" /> 
+                  
+                       <p:panel id="panel" toggleable="true" toggleOrientation="horizontal" header="Ajouter la liste de Materielle" >
+                       
+                            <p:outputLabel rendered="#{sortieB1persBean.renderListMaterielle}" value="Liste de #{sortieB1persBean.bien.natureBien} à ajouter :  " />   
+                                <p:outputLabel rendered="#{sortieB1persBean.renderListMaterielle}" value="#{sortieB1persBean.bien.natureBien}  n° : #{sortieB1persBean.numMaterielle} sur #{sortieB1persBean.quantite}" />   
+                                 
+                                <p:panelGrid columns="2" >
+                                       
+                                     
+                                    <h:outputLabel rendered="#{sortieB1persBean.renderListMaterielle}" value="Num Immobilisation:" for="numImm" />
+                                        <h:inputText rendered="#{sortieB1persBean.renderListMaterielle}" id="numImm" value="#{sortieB1persBean.materielle.numImm}" title="NumImm" />
+                                        <h:outputLabel rendered="#{sortieB1persBean.renderListMaterielle}" value="Num de Serie:" for="numSerie" />
+                                        <h:inputText rendered="#{sortieB1persBean.renderListMaterielle}" id="numSerie" value="#{sortieB1persBean.materielle.numSerie}" title="NumSerie" />
+                                        <h:outputLabel rendered="#{sortieB1persBean.renderListMaterielle}" value="Marque:" for="marque" />
+                                        <h:inputText rendered="#{sortieB1persBean.renderListMaterielle}" id="marque" value="#{sortieB1persBean.materielle.marque}" title="Marque" />
+                                       
+                                    </p:panelGrid>
+                                    <p:commandButton value="Ajouter MAterielle" action="#{sortieB1persBean.AjoutMat()}"  update="tb growl panel"/>
+                                   
+                                    <p:dataTable id="tb" value="#{sortieB1persBean.listeMat}"   var="mat" > 
+                                        <p:column headerText="Num Immobilisation" >
+                                            <h:outputText value="#{mat.numImm}"/>
+                                        </p:column>
+                                        <p:column headerText="Num serie" >
+                                            <h:outputText value="#{mat.numSerie}"/>
+                                        </p:column>
+                                        <p:column headerText="Marque" >
+                                            <h:outputText value="#{mat.marque}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                      <p:commandButton id="valider" actionListener="#{sortieB1persBean.create()}" update="growl,form1"  value="Ajouter" style="position: relative; left: 400px; color: blue ;width: 200px "  /> 
+
+                                </p:panel>
+                    
+                    
+
+                </h:form>
+
+               
+
+
+
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
+

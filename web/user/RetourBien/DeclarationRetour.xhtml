@@ -1,0 +1,111 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+        
+    </h:head>
+    <h:body >
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+                
+
+
+                <f:view id="view" > <!--sortieB1Bean.findValidatedAut()-->
+                    
+                    <h:form id="form2">
+                         <h3 style="color: darkblue; position: relative; left: 400px ; "><h:outputText value="Autorisation de sortie de bien"/></h3> 
+
+                        <h4><p:outputLabel for="numAut" style="position: relative; left: 600px ;width: 100px;" value="Autorisation N°: "/>
+                         
+                        <p:selectOneMenu id="numAut" style="position: relative; left: 600px ;width: 280px;" value="#{sortieB1Bean.sortieB1retour}" converter="omnifaces.SelectItemsConverter"  >
+                                <f:selectItem itemLabel="Choisir l'id de l'autorisation" itemValue="" />  
+                                <f:selectItems value="#{sortieB1Bean.findValidatedAut()}" var="retour"  itemLabel="#{retour.idsortieb1Societe}"/>
+                                <p:ajax update="form2" process="@this"   />
+                        </p:selectOneMenu>
+                        </h4>
+                        <h4></h4>
+                        
+                        <h:form id="form1">
+                        <p:panelGrid columns="2">
+                            <p:panelGrid columns="2" style="width: 500px ; height: 190px;">
+
+                                <p:outputLabel value="Demandeur :" for="demandeur" />
+                                <p:outputLabel value=" #{sortieB1Bean.sortieB1retour.utilisateuridUtilisateur.utilisateurNom} #{sortieB1Bean.sortieB1retour.utilisateuridUtilisateur.utilisateurPrenom}" id="demandeur"  />
+                                <p:outputLabel value="Service :" for="service" />
+                                <p:outputLabel value="#{sortieB1Bean.sortieB1retour.utilisateuridUtilisateur.serviceIdService.desigService}" id="service" />
+                                <p:outputLabel value="Fonction" for="fonction" />
+                                <p:outputLabel value=" #{sortieB1Bean.sortieB1retour.utilisateuridUtilisateur.fonctionIdFct.desigFct}" id="fonction" />
+                              
+                                <p:outputLabel value="Nature Bien:"  />
+                                <p:outputLabel value="#{sortieB1Bean.sortieB1retour.biensIdBiens.natureBien}"  />  
+                                 
+                                <p:outputLabel value="Quantite:" for="quantite" />
+                                <p:outputLabel id="quantite" value="#{sortieB1Bean.sortieB1retour.quantite}" title="Quantite"  style="width:  300px" />
+                                 <p:outputLabel value="Type de sortie:"  />
+                                 <p:outputLabel value="#{sortieB1Bean.sortieB1retour.typeSortieidTypeSortie.typeSortie}"  />  
+                                      
+                                
+
+                            </p:panelGrid >
+                            <p:panelGrid columns="2" style="width: 500px">
+                                <p:outputLabel value="Num Rebut:" for="numRebut" />
+                                <p:outputLabel id="numRebut" value="#{sortieB1Bean.sortieB1retour.numRebut}" title="NumRebut"  style="width:  250px"/>
+                                <p:outputLabel value="Destination:" for="destination" />
+                                <p:outputLabel id="destination" value="#{sortieB1Bean.sortieB1retour.destination}" title="Destination"  style="width:  250px"/>
+                                <p:outputLabel value="Transporteur:" for="transporter" />
+                                <p:outputLabel id="transporter" value="#{sortieB1Bean.sortieB1retour.transporter}" title="Transporter"  style="width:  250px"/>
+
+                                <p:outputLabel value="Date Sortie:" for="dateSortie"  />
+                                <p:outputLabel value="#{sortieB1Bean.sortieB1retour.dateSortie}"  id="dateSortie" style="width:  250px" >
+                                  <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+
+                                
+                                <p:outputLabel   value="Date Retour prévue:"   for="dateRetour"  />
+                                      
+                             
+                                <p:outputLabel  value="#{sortieB1Bean.sortieB1retour.dateRetour}"   id="dateRetour" > 
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </p:outputLabel>
+                                <p:outputLabel  value="Responsable Retour:" for="responsableRetour" />
+                                <p:outputLabel  id="responsableRetour" value="#{sortieB1Bean.sortieB1retour.responsableRetour}" title="ResponsableRetour"  style="width:  250px"/>
+                               
+                            </p:panelGrid>
+                            <p:dataTable id="tb" value="#{sortieB1Bean.sortieB1retour.biensIdBiens.materiellesList}"   var="mat" > 
+                                        <p:column headerText="Num Imm" >
+                                            <h:outputText value="#{mat.numImm}"/>
+                                        </p:column>
+                                        <p:column headerText="Num serie" >
+                                            <h:outputText value="#{mat.numSerie}"/>
+                                        </p:column>
+                                        <p:column headerText="Marque" >
+                                            <h:outputText value="#{mat.marque}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                             </p:panelGrid>
+                            <p:panelGrid columns="2" >
+                                  <p:outputLabel rendered="#{!sortieB1Bean.sortieB1retour.dateRetour.before(sortieB1Bean.currentDate)}" value="Date de retour de bien pas atteint ! bien pas encore retourné " style="color: forestgreen"  />
+                            <p:outputLabel rendered="#{sortieB1Bean.sortieB1retour.dateRetour.before(sortieB1Bean.currentDate)}" value="Attention : Date de retour de bien est atteint" style="color: crimson" />
+                           
+                                
+                            </p:panelGrid>
+                        <p:growl id="growl" showDetail="true"  transient="true" /> 
+                         
+
+
+                    </h:form>
+                    </h:form>   
+                </f:view>
+
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+

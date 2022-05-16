@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+<navigation-rule>
+        <navigation-case>
+        <from-outcome>AjoutSB1</from-outcome>
+        <to-view-id>/user/SB1/AjoutSB1.xhtml</to-view-id>
+    </navigation-case>
+     <navigation-case>
+        <from-outcome>AjoutRebut</from-outcome>
+        <to-view-id>/user/Rebut/AjoutRebut.xhtml</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>AjoutTransfert</from-outcome>
+        <to-view-id>/user/Transfert/AjoutTransfert.xhtml</to-view-id>
+    </navigation-case>
+        <navigation-case>
+        <from-outcome>index</from-outcome>
+        <to-view-id>user/index.xhtml?faces-redirect=true</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>validSB1</from-outcome>
+        <to-view-id>/user/SB1/validSB1.xhtml</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>validRebut</from-outcome>
+        <to-view-id>/user/Rebut/validRebut.xhtml</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>validTransfert</from-outcome>
+        <to-view-id>/user/Transfert/validTransfert.xhtml</to-view-id>
+    </navigation-case>
+     
+    <navigation-case>
+        <from-outcome>adminPage</from-outcome>
+        <to-view-id>/admin/admin_page.xhtml</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>acueil</from-outcome>
+        <to-view-id>/user/index.xhtml</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>listUtilisateur</from-outcome>
+        <to-view-id>/admin/listUtilisateur.xhtml</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>AjoutSBPers</from-outcome>
+        <to-view-id>/user/SB1pers/AjoutSBPersonnel.xhtml</to-view-id>
+    </navigation-case>
+    <navigation-case>
+        <from-outcome>validSBPers</from-outcome>
+        <to-view-id>/user/SB1pers/validSBPersonnel.xhtml</to-view-id>
+    </navigation-case>
+    
+   
+     <navigation-case>
+        <from-outcome>DeclarationRetour</from-outcome>
+        <to-view-id>/user/RetourBien/DeclarationRetour.xhtml</to-view-id>
+    </navigation-case>
+     <navigation-case>
+        <from-outcome>Motdepasse</from-outcome>
+        <to-view-id>/user/motdepasse.xhtml</to-view-id>
+    </navigation-case>
+  
+    </navigation-rule>
+    
+  
+</faces-config>

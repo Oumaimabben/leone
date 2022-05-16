@@ -1,0 +1,119 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>liste de Transfert</title>
+        
+    </h:head>
+    <h:body> 
+        
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+                <f:view>
+                    <h:form>
+                        <center> <h3 style="color: darkblue"><h:outputText value="Listes des Autorisations de Transfert d'equipement"/></h3></center>
+
+
+                        <p:dataTable id="tb" value="#{sortieB1Bean.findInvalidatedAut()}"   var="item" > 
+
+                            <p:column headerText="Voir" style="width:4%">  
+                                <p:commandButton id="selectButton"  action="voirSB1?faces-redirect=true" icon="ui-icon-search" title="Voir">  
+                                    <f:setPropertyActionListener value="#{item}" target="#{sortieB1Bean.sortieB1Choisit}"  />  
+
+                                </p:commandButton>  
+                            </p:column>  
+
+                            
+                            <p:column filterBy="#{item.utilisateuridUtilisateur.utilisateurNom}" >
+                                <f:facet name="header">
+                                    <h:outputText value="Demandeur"/>
+                                </f:facet>
+                                <h:outputText value="#{item.utilisateuridUtilisateur.utilisateurNom} #{item.utilisateuridUtilisateur.utilisateurPrenom}  "/>
+                            </p:column>
+
+                            <p:column headerText="Num d'immobilisation" filterBy="#{item.typeSortieidTypeSortie.typeSortie}">
+                                <h:outputText value="#{item.typeSortieidTypeSortie.typeSortie}"/>
+                            </p:column>
+
+                            <p:column headerText="Fonction" filterBy="#{item.utilisateuridUtilisateur.fonctionIdFct.desigFct}">
+                                <h:outputText value="#{item.utilisateuridUtilisateur.fonctionIdFct.desigFct}"/>
+                            </p:column>
+                            <p:column headerText="Service" filterBy="#{item.utilisateuridUtilisateur.serviceIdService.desigService}">
+                                <h:outputText value="#{item.utilisateuridUtilisateur.serviceIdService.desigService}"/>
+                            </p:column>
+                            
+                            
+                            <p:column headerText="Designation" filterBy="#{item.biensIdBiens.natureBien}">
+                                <h:outputText value="#{item.biensIdBiens.natureBien}"/>
+                            </p:column>
+
+
+                           
+
+
+
+                            <p:column filterBy="#{item.numRebut}">
+                                <f:facet name="header">
+                                    <h:outputText value="c.emmeteur"/>
+                                </f:facet>
+                                <h:outputText value="#{item.numRebut}"/>
+                            </p:column>
+
+
+                            <p:column filterBy="#{item.destination}">
+                                <f:facet name="header">
+                                    <h:outputText value="c.receveur"/>
+                                </f:facet>
+                                <h:outputText value="#{item.destination}"/>
+                            </p:column>
+
+                            <p:column filterBy="#{item.transporter}">
+                                <f:facet name="header">
+                                    <h:outputText value="valeur residuelle"/>
+                                </f:facet>
+                                <h:outputText value="#{item.transporter}"/>
+                            </p:column>
+
+                            
+                            
+
+
+
+
+                            <p:column filterBy="#{item.observation}">
+                                <f:facet name="header">
+                                    <h:outputText value="Observation"/>
+                                </f:facet>
+                                <h:outputText value="#{item.observation}"/>
+                            </p:column>
+
+
+                            <p:column style="text-align: center">
+                                <f:facet name="header">
+                                    <h:outputText value="Validation General"/>
+                                </f:facet>
+                                <p:selectBooleanCheckbox value="#{item.validationG }" style="float: none;" disabled="true"/>
+
+
+                            </p:column>
+
+
+
+                        </p:dataTable>
+
+                    </h:form>
+
+                </f:view>
+
+
+            </ui:define>
+
+
+        </ui:composition>
+    </h:body>
+</html>

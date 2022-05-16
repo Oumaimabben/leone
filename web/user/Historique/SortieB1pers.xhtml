@@ -1,0 +1,183 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>histo personnel</title>
+        
+    </h:head>
+    <h:body> 
+        <h:form id="dial">
+
+            
+            <p:confirmDialog message="Vous etes sur de supprimer cette autorisation ?"
+                             header="Supression d'une autorisation" severity="alert"
+                             widgetVar="cd">
+                <p:commandButton value="Oui" actionListener="#{sortieB1persBean.remove()}"
+                                 update="msg :form :dial" oncomplete="confirmation.hide()"/>
+                <p:commandButton value="Non"  
+                                 update="msg :form :dial" oncomplete="confirmation.hide()"/>
+                 <p:growl id="msg" showDetail="true" showSummary="true" />
+            </p:confirmDialog> 
+        </h:form>
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+
+                <h:form id="form">
+                    <center> <h3 style="color: darkblue"><h:outputText value="Listes des autorisations de bien personnel"/></h3></center>
+                    <p:dataTable value="#{sortieB1persBean.findValidatedAut()}" var="item" >
+                        <p:column style="width:4%" headerText="Voir">  
+                            <p:commandButton id="selectButton2"    icon="ui-icon-search" title="View" update=":form2:display" oncomplete="PF('SB1Dialog').show()">  
+                                <f:setPropertyActionListener value="#{item}" target="#{sortieB1persBean.sortieB1persChoisit}" />  
+                            </p:commandButton>  
+                        </p:column> 
+                        <p:column style="width:4%" headerText="Supprimer" rendered="#{utilisateurBean.isAdmin()}">  
+                            <p:commandButton id="supp"  onclick="cd.show()" icon="ui-icon-closethick" title="View">  
+                                <f:setPropertyActionListener value="#{item}" target="#{sortieB1persBean.sortieB1persChoisit}" />  
+
+                            </p:commandButton>  
+
+                        </p:column> 
+                        <p:column headerText="Idsortie" filterBy="#{item.idsortieB1personnel}">
+                            <h:outputText value="#{item.idsortieB1personnel}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.utilisateuridUtilisateur.utilisateurNom} ">
+                            <f:facet name="header">
+                                <h:outputText value="Nom D." />
+                            </f:facet>
+                            <h:outputText value="#{item.utilisateuridUtilisateur.utilisateurNom} "/>
+                        </p:column>
+                        
+                        <p:column filterBy="#{item.utilisateuridUtilisateur.utilisateurPrenom} ">
+                            <f:facet name="header">
+                                <h:outputText value="Prenom D." />
+                            </f:facet>
+                            <h:outputText value=" #{item.utilisateuridUtilisateur.utilisateurPrenom}"/>
+                        </p:column>
+                        <p:column headerText="NatureBien" filterBy="#{item.biensIdBiens.natureBien}">
+                            <h:outputText value="#{item.biensIdBiens.natureBien}"/>
+                        </p:column>
+                       
+                        <p:column filterBy="#{item.destination}">
+                            <f:facet name="header">
+                                <h:outputText value="Destination"/>
+                            </f:facet>
+                            <h:outputText value="#{item.destination}"/>
+                        </p:column>
+
+
+                        <p:column filterBy="#{item.prenomT} " >
+                            <f:facet name="header">
+                                <h:outputText value="Prenom T."/>
+                            </f:facet>
+                            <h:outputText value=" #{item.prenomT}"/>
+                        </p:column>
+                        
+                        
+                        <p:column filterBy="#{item.nomT} " >
+                            <f:facet name="header">
+                                <h:outputText value="Nom T."/>
+                            </f:facet>
+                            <h:outputText value="#{item.nomT} "/>
+                        </p:column>
+                       
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="Validation G"/>
+                            </f:facet>
+
+                            <p:selectBooleanCheckbox value="#{item.validationG }" disabled="true"/>
+
+                        </p:column>
+
+                      
+
+                    </p:dataTable>
+
+                </h:form>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+        <h:form id="form2">
+            <p:dialog header="Autorisation Sortie bien personnel" widgetVar="SB1Dialog" resizable="false" id="SB1Dlg"
+                      showEffect="fade" hideEffect="explode" modal="true" >
+
+                <h:panelGrid id="display" columns="2" cellpadding="4" style="margin:0 auto;">
+
+                    <h2><p:outputLabel style="position: relative; left: 850px;" value="Autorisation N°: #{sortieB1persBean.sortieB1persChoisit.idsortieB1personnel}"/></h2>
+                    <p:panelGrid columns="2">
+                        <p:panelGrid columns="2" style=" width: 500px " >
+                            <p:outputLabel value="Demandeur :" for="demandeur" />
+                            <p:outputLabel value=" #{utilisateurBean.find().utilisateurNom} #{utilisateurBean.find().utilisateurPrenom}" id="demandeur" />
+                            <p:outputLabel value="Service :" for="service" />
+                            <p:outputLabel value="#{utilisateurBean.find().serviceIdService.desigService}" id="service" />
+                            <p:outputLabel value="Fonction" for="fonction" />
+                            <p:outputLabel value=" #{utilisateurBean.find().fonctionIdFct.desigFct}" id="fonction" />
+
+
+
+
+                            <p:outputLabel value="Nature de Bien:" for="natureBien" />
+                            <p:outputLabel id="natureBien" value="#{sortieB1persBean.sortieB1persChoisit.biensIdBiens.natureBien}"  />
+                            <p:outputLabel value="Quantite:" for="quantite" />
+                            <p:outputLabel id="quantite" value="#{sortieB1persBean.sortieB1persChoisit.quantite}"   />
+                            <p:outputLabel value="Destination :" for="destination" />
+                            <p:outputLabel id="destination" value="#{sortieB1persBean.sortieB1persChoisit.destination}" />
+
+                        </p:panelGrid >
+                        <p:panelGrid columns="2"  style=" width: 500px " >
+                            <f:facet name="header">
+                                Données Transporteur 
+                            </f:facet>
+
+
+                            <p:outputLabel value="Nom Transporteur:" for="nomT" />
+                            <p:outputLabel id="nomT" value="#{sortieB1persBean.sortieB1persChoisit.nomT}" title="Nom Transporteur" />
+                            <p:outputLabel value="Prenom Transporteur:" for="prenomT" />
+                            <p:outputLabel id="prenomT" value="#{sortieB1persBean.sortieB1persChoisit.prenomT}" title="Prenom Transporteur" />
+                            <p:outputLabel value="Institut ou société:" for="institut" />
+                            <p:outputLabel id="institut" value="#{sortieB1persBean.sortieB1persChoisit.institut}" title="Institut:" />
+
+                             <p:outputLabel value="Accord de stage:" for="accordRefus" title="Accord de stage:"/>
+                            <p:outputLabel id="accordRefus"  value="#{sortieB1persBean.sortieB1persChoisit.accordRefus}"  >
+                            </p:outputLabel>
+
+                              <p:outputLabel value="Date debut:"  />
+                              <h:outputText  id="datedebut" value="#{sortieB1persBean.sortieB1persChoisit.datedebut}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                            <p:outputLabel value="Date fin:"  />
+                            <h:outputText  value="#{sortieB1persBean.sortieB1persChoisit.datefin}" >
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                             
+                             
+
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+
+
+                            <p:outputLabel value="Observation:" for="observation" />
+                            <p:inputTextarea id="observation" value="#{sortieB1persBean.sortieB1persChoisit.observation}" title="Observation" rows="6" cols="35" readonly="true"/> 
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+
+
+                            <p:outputLabel value="Remarques:" for="remarque" />
+                            <p:inputTextarea id="remarque" value="#{sortieB1persBean.sortieB1persChoisit.remarque}" title="Observation" rows="6" cols="35" readonly="true" /> 
+                        </p:panelGrid>
+                    </p:panelGrid>
+                </h:panelGrid>
+
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+

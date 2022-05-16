@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+                 <h2 style="color: darkblue"><h:outputText  value="changer votre mot de passe"/></h2>
+            
+                <h:form id="form">
+                <p:panelGrid columns="2">
+                    
+                    <p:outputLabel value="Ancien mot de passe" />
+                    <p:password value="#{utilisateurBean.ancienpass}" required="true" requiredMessage="Obligatoir!" />
+                    <p:outputLabel value="Nouveau mot de passe" />
+                    <p:password id="pass1" match="pass2" value="#{utilisateurBean.nouveaupass}" feedback="true" required="true" requiredMessage="Obligatoir!" />
+                    <p:outputLabel value="Confirmer nouveau mot de passe" />
+                    <p:password id="pass2" required="true" requiredMessage="Obligatoir!" />
+                </p:panelGrid>
+                <p:commandButton value="Modifier" action="#{utilisateurBean.changerMotDePasse()}" update="msg form" />
+                <p:growl id="msg" showDetail="true" showSummary="true" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

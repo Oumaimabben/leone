@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+    
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <h:head>
+        <title>valid personnel</title>
+    </h:head> 
+    <h:body>
+        
+
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+
+
+
+                <h:form >
+
+               <h2 style="color: darkblue"><h:outputText style="position: relative; left: 450px;" value="Validation"/></h2>
+
+                    <h4><p:outputLabel style="position: relative; left: 850px;" value="Autorisation N°: #{sortieB1persBean.sortieB1persChoisit.idsortieB1personnel}"/></h4>
+                    <p:panelGrid columns="2">
+                        <p:panelGrid columns="2" style="height: 300px ; width: 500px">
+
+                            <p:outputLabel value="Demandeur :" for="demandeur" />
+                            <p:outputLabel value=" #{sortieB1persBean.sortieB1persChoisit.utilisateuridUtilisateur.utilisateurNom} #{sortieB1persBean.sortieB1persChoisit.utilisateuridUtilisateur.utilisateurPrenom}" id="demandeur" />
+                            <p:outputLabel value="Service :" for="service" />
+                            <p:outputLabel value="#{sortieB1persBean.sortieB1persChoisit.utilisateuridUtilisateur.serviceIdService.desigService}" id="service" />
+                            <p:outputLabel value="Fonction" for="fonction" />
+                            <p:outputLabel value=" #{sortieB1persBean.sortieB1persChoisit.utilisateuridUtilisateur.fonctionIdFct.desigFct}" id="fonction" />
+
+
+
+
+                            <p:outputLabel value="Nature de Bien:" for="natureBien" />
+                            <p:outputLabel id="natureBien" value="#{sortieB1persBean.sortieB1persChoisit.biensIdBiens.natureBien}"  />
+                              <p:outputLabel value="Quantite:" for="quantite" />
+                            <p:outputLabel id="quantite" value="#{sortieB1persBean.sortieB1persChoisit.quantite}"   />
+                            <p:outputLabel value="Destination :" for="destination" />
+                            <p:outputLabel id="destination" value="#{sortieB1persBean.sortieB1persChoisit.destination}" />
+
+                        </p:panelGrid >
+                        <p:panelGrid columns="2" style="height: 300px ; width: 500px" >
+                            <f:facet name="header">
+                                Données Transporteur 
+                            </f:facet>
+
+
+                            <p:outputLabel value="Nom Transporteur:" for="nomT" />
+                            <p:outputLabel id="nomT" value="#{sortieB1persBean.sortieB1persChoisit.nomT}" title="Nom Transporteur" />
+                            <p:outputLabel value="Prenom Transporteur:" for="prenomT" />
+                            <p:outputLabel id="prenomT" value="#{sortieB1persBean.sortieB1persChoisit.prenomT}" title="Prenom Transporteur" />
+                            <p:outputLabel value="Institut ou société:" for="institut" />
+                            <p:outputLabel id="institut" value="#{sortieB1persBean.sortieB1persChoisit.institut}" title="Institut:" />
+
+                            <p:outputLabel value="Type de stage:" for="typeStage" />
+                            <p:outputLabel id="typeStage" value="#{sortieB1persBean.sortieB1persChoisit.typeStageIdtypeStage.typeStage}" title="typeStage:" />
+                            <p:outputLabel value="Accord de stage:" for="accordRefus" title="Accord de stage:"/>
+                            <p:outputLabel id="accordRefus"  value="#{sortieB1persBean.sortieB1persChoisit.accordRefus}"  >
+                            </p:outputLabel>
+                            <p:outputLabel value="Date debut :" for="datedebut" >
+
+                            </p:outputLabel>
+                            <p:outputLabel id="datedebut" value="#{sortieB1persBean.sortieB1persChoisit.datedebut}" >
+                            
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+
+                            <p:outputLabel value="Date fin :" for="datefin" />
+                            <p:outputLabel id="datefin" value="#{sortieB1persBean.sortieB1persChoisit.datefin}" >
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </p:outputLabel>
+
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+
+
+                            <p:outputLabel value="Observations:" for="observation" />
+                            <p:inputTextarea id="observation" value="#{sortieB1persBean.sortieB1persChoisit.observation}" title="Observation" rows="6" cols="33" readonly="true"/> 
+                        </p:panelGrid>
+                        <p:panelGrid columns="2">
+
+
+                            <p:outputLabel value="Remarques:" for="remarque" />
+                            <p:inputTextarea id="remarque" value="#{sortieB1persBean.sortieB1persChoisit.remarque}" title="Observation" rows="6" cols="36" readonly="true" /> 
+                        </p:panelGrid>
+                    </p:panelGrid>
+
+
+
+                </h:form>
+
+
+
+
+                <h:form id="tabVal">
+                    <p:panelGrid columns="6" style="text-align: center ; width: 1048px; " >
+                        <p:outputLabel value="Service Competent"/>
+                        <p:outputLabel value="Visa BMRT"/>
+                        <p:outputLabel value="Visa SMRT"/>
+                        <p:outputLabel value="Visa Directeur Financier"/>
+                        <p:outputLabel value="Visa Directeur General"/>
+                        <p:outputLabel value="Visa SOS"/>
+
+
+                        <c:choose>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaServiceCompetent==true}">
+                                <h:outputText value="Validé" style="background-color: chartreuse"/>
+                            </c:when>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaServiceCompetent==false}">
+                                <h:outputText value="Refusé" style="background-color: red"/>
+                            </c:when>
+                            <c:otherwise>
+                                <h:outputText value="En cours " style="background-color: yellow"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaBMRT==true}">
+                                <h:outputText value="Validé" style="background-color: chartreuse"/>
+                            </c:when>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaBMRT==false}">
+                                <h:outputText value="Refusé" style="background-color: red"/>
+                            </c:when>
+                            <c:otherwise>
+                                <h:outputText value="En cours" style="background-color: yellow"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaSMRT==true}">
+                                <h:outputText value="Validé" style="background-color: chartreuse"/>
+                            </c:when>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaSMRT==false}">
+                                <h:outputText value="Refusé" style="background-color: red"/>
+                            </c:when>
+                            <c:otherwise>
+                                <h:outputText value="En cours" style="background-color: yellow"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaDirFinancier==true}">
+                                <h:outputText value="Validé" style="background-color: chartreuse"/>
+                            </c:when>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaDirFinancier==false}">
+                                <h:outputText value="Refusé" style="background-color: red"/>
+                            </c:when>
+                            <c:otherwise>
+                                <h:outputText value="En cours" style="background-color: yellow"/>
+                            </c:otherwise>
+                        </c:choose>
+                        <c:choose>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaDirGeneral==true}">
+                                <h:outputText value="Validé" style="background-color: chartreuse"/>
+                            </c:when>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaDirGeneral==false}">
+                                <h:outputText value="Refusé" style="background-color: red"/>
+                            </c:when>
+                            <c:otherwise>
+                                <h:outputText value="En cours" style="background-color: yellow"/>
+                            </c:otherwise>
+                        </c:choose>
+
+                        <c:choose>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaSOS==true}">
+                                <h:outputText value="Validé" style="background-color: chartreuse"/>
+                            </c:when>
+                            <c:when test="#{sortieB1persBean.sortieB1persChoisit.visaSOS==false}">
+                                <h:outputText value="Refusé" style="background-color: red"/>
+                            </c:when>
+                            <c:otherwise>
+                                <h:outputText value="En cours" style="background-color: yellow"/>
+                            </c:otherwise>
+                        </c:choose>
+
+
+                    </p:panelGrid>
+
+                    <p:growl id="growl" showDetail="true"  transient="true" /> 
+                    <p:commandButton value="Valider" actionListener="#{sortieB1persBean.validerSortie()}" update="growl,tabVal" style="position: relative; left: 350px; color: blue ;"   />
+                    <p:commandButton value="Refuser" actionListener="#{sortieB1persBean.refuserSortie()}" update="growl,tabVal" style="position: relative; left: 350px; color: blue ;" />
+                    <h:commandLink actionListener="#{sortieB1persBean.createPDF()}">
+                        <p:graphicImage value="../../resources/pdf_icon.png" style="position: relative;  left: 350px; width:50px; height:50px ; top: 20px"/>
+                    </h:commandLink>
+
+                </h:form>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </h:body>
+</html>
+

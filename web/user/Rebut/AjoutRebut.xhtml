@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:of="http://omnifaces.org/functions"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        
+        <title>Ajouter Rebut</title>
+    </h:head> 
+    <h:body>
+
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+
+
+              
+
+                <h:form id="form1">
+  <p:growl id="growl" showDetail="true"  transient="true" /> 
+                    <h3 style="color: darkblue; "><h:outputText style="position: relative; left: 450px;" value="Autorisation Mise en Rebut"/></h3> 
+
+                    <h4><p:outputLabel id="num" style="position: relative; left: 920px;" value="Autorisation N°: #{rebutBean.nextId}"/></h4>
+                    <p:panelGrid columns="2">
+                        <p:panelGrid columns="2" style="height: 300px; width: 550px">
+
+                            <p:outputLabel value="Demandeur :" for="demandeur" />
+                            <p:outputLabel value=" #{utilisateurBean.find().utilisateurNom} #{utilisateurBean.find().utilisateurPrenom}" id="demandeur"  />
+                            <p:outputLabel value="Service :" for="service" />
+                            <p:outputLabel value="#{utilisateurBean.find().serviceIdService.desigService}" id="service" />
+                            <p:outputLabel value="Fonction" for="fonction" />
+                            <p:outputLabel value=" #{utilisateurBean.find().fonctionIdFct.desigFct}" id="fonction" />
+
+                           
+                     
+
+                            <p:outputLabel value="Numero d'immobilisation: *"   />
+                            <p:inputText value=" "   style="width:  300px"   >
+                               
+                            </p:inputText> 
+                            <p:outputLabel value="Nature d'investissement: *"   />
+                            <p:inputText value="#{rebutBean.natureInvestissement}"  required="true" requiredMessage="La nature bien est obligatoire." style="width:  300px"   >
+                              
+                            </p:inputText> 
+                            <p:outputLabel value="Centre de coût: *"   />
+                            <p:inputText value="#{rebutBean.centreCout}"  required="true" requiredMessage="La nature bien est obligatoire." style="width:  300px"   >
+                               
+                            </p:inputText> 
+
+
+
+
+
+                            
+
+
+                        </p:panelGrid >
+                      
+                        <p:panelGrid columns="2" style="height: 300px ; width: 550px">
+                            <p:outputLabel value="Montant d'acquisition:" />
+                            <p:inputText id="numRebut" value="#{rebutBean.montantAcqusition}" title="NumRebut" required="true" requiredMessage="le NumRebut est obligatoire." style="width:  250px"/>
+                            <p:outputLabel value="Valeur résiduelle:"  />
+                            <p:inputText id="destination" value="#{rebutBean.valeurResiduelle}" title="Destination" required="true" requiredMessage="La Destination est obligatoire." style="width:  250px"/>
+                            <p:outputLabel value="Perte:" for="transporter" />
+                            <p:inputText id="transporter" value="#{rebutBean.perte}" title="Transporter" required="true" requiredMessage="Le Transporteur est obligatoire." style="width:  250px"/>
+
+                            <p:outputLabel value="Date d'acquisition :"   />
+                            <p:calendar  value="#{rebutBean.dateAcquistion}" mindate="#{rebutBean.currentDate}" id="dateSortie" showOn="button" lang="fr" required="true" requiredMessage="La date de sortie est obligatoire." style="width:  250px">
+                            </p:calendar>
+                           
+                            
+                            <p:outputLabel  value="Cause Rebut:" for="responsableRetour" />
+                            <p:inputText  id="responsableRetour" value="#{rebutBean.causeRebut}" title="ResponsableRetour" required="true" requiredMessage="Le responsable de retour est obligatoire." style="width:  250px"/>
+                           
+                        </p:panelGrid>
+
+                        <p:panelGrid columns="2">
+
+
+                            <p:outputLabel value="Observation:" for="observation" />
+                            <p:inputTextarea id="observation" value="#{rebutBean.designation}" title="Observation" rows="6" cols="39" /> 
+                            
+                        </p:panelGrid>
+                        
+                        
+
+                    </p:panelGrid>
+
+                    
+                        <p:panel id="panel" toggleable="true" toggleOrientation="horizontal"  >
+
+
+                       
+                   
+                            <p:commandButton id="valider" action="#{rebutBean.createRebut()}" update="growl,num,form1" value="Ajouter" style="position: relative; left: 410px; color: blue ; width: 200px"/> 
+              
+                    </p:panel>
+
+                </h:form>
+
+
+
+
+
+
+            </ui:define>
+
+        </ui:composition>
+    </h:body>
+</html>
+
+

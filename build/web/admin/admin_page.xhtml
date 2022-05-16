@@ -1,0 +1,314 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui" >     
+     
+  
+    <h:head>
+        <title>Gérer utilisateur</title>
+        
+    </h:head>   
+    <h:body> 
+
+
+        <h:form>
+            <p:confirmDialog message="voulez vous supprimer ce service ?"
+                             header="Supression d'un service" severity="alert"
+                             widgetVar="serviceDialog">
+                <p:commandButton value="Oui" actionListener="#{serviceBean.remove()}"
+                                 update="@all" oncomplete="#{serviceDialog.hide()}"/>
+                <p:commandButton value="Non"  
+                                 update="@all" oncomplete="#{serviceDialog.hide()}"/>
+            </p:confirmDialog> 
+        </h:form>
+
+
+
+        <h:form>
+            <p:confirmDialog message="voulez vous supprimer la fonction ?"
+                             header="Supression d'une fonction" severity="alert"
+                             widgetVar="fonctionDialog">
+                <p:commandButton value="Oui" actionListener="#{fonctionBean.remove()}"
+                                 update="@all" oncomplete="confirmation.hide()"/>
+                <p:commandButton value="Non"  
+                                 update="@all" oncomplete="confirmation.hide()"/>
+            </p:confirmDialog> 
+        </h:form>
+
+
+
+        <ui:composition template="/welcomePrimefaces.xhtml">
+            <ui:define name="content">
+                <p:tabView id="tabView">
+
+
+                    <p:tab id="tab1" title="Gestion des utilisateurs" titletip="Gérer utilisateurs">
+                        <h:form>
+                            <h2 style="color: darkblue"> <center><h:outputText value="Gérer les Utilisateurs"/> </center></h2>
+                            <center>
+                                <p:panelGrid columns="2" style="width: 200px">
+
+                                    <p:outputLabel value="Matricule:" for="idUtilisateur" />
+                                    <p:inputText id="idUtilisateur" value="#{utilisateurBean.nouveauUtilisateur.idUtilisateur}" title="matricule Utilisateur" required="true" requiredMessage="Id est obligatoire." style="width: 350px"/>
+                                    <p:outputLabel value="Nom:" for="utilisateurNom" />
+                                    <p:inputText id="utilisateurNom" value="#{utilisateurBean.nouveauUtilisateur.utilisateurNom}" title="NomUtilisateur" required="true" requiredMessage="le Nom est obligatoire." style="width: 350px" />
+                                    <p:outputLabel value="Prenom:" for="utilisateurPrenom" />
+                                    <p:inputText id="utilisateurPrenom" value="#{utilisateurBean.nouveauUtilisateur.utilisateurPrenom}" title="Prenom Utilisateur " required="true" requiredMessage="le Prenom est obligatoire." style="width: 350px"/>
+                                    <p:outputLabel value="Password:" for="password" />
+                                    <p:password  id="password" value="#{utilisateurBean.nouveauUtilisateur.password}" title="Password" required="true" match="pwd2" feedback="true" requiredMessage="le mot de passe est obligatoire." style="width: 350px"  />
+                                    <h:outputLabel for="pwd2" value="Confirmer: * " />
+                                    <p:password id="pwd2"  feedback="false" label="Password 2" required="true" requiredMessage="le champ confirmation est obligatoire." style="width: 350px"/>
+                                    <p:outputLabel value="Email:" for="email" />
+                                    <p:inputText id="email" value="#{utilisateurBean.nouveauUtilisateur.email}" title="Email" required="true" requiredMessage="Email est obligatoire." style="width: 350px">
+                                        <f:validator validatorId="custom.emailValidator" /> 
+                                    </p:inputText>
+
+                                    <p:outputLabel value="Type:" for="userType" /> 
+                                    <p:selectOneMenu id="userType" var="usertype" value="#{utilisateurBean.nouveauUtilisateur.usertype}" required="true" requiredMessage="le Type est obligatoire." style="width: 350px">
+                                        <f:selectItem noSelectionOption="true" itemLabel="Choisir le type d'utilisateur" itemValue="" />  
+                                        <f:selectItem itemLabel="Administrateur" itemValue="admin" />  
+                                        <f:selectItem itemLabel="Utilisateur" itemValue="user" />  
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel value="Fonction:" for="fonctionDesigFct" />
+                                    <p:selectOneMenu id="fonctionDesigFct" value="#{utilisateurBean.nouveauUtilisateur.fonctionIdFct}"  required="true" requiredMessage="La fonction est obligatoire." style="width: 350px">
+                                       
+                                        <f:selectItem noSelectionOption="true" itemLabel="Choisir la fonction" itemValue="" />  
+                                        <f:selectItems value="#{fonctionBean.findAll()}" var="f" itemValue="#{f}"/>
+                                    </p:selectOneMenu>
+                                    <p:outputLabel value="Service:" for="serviceDesigService" />
+                                    <p:selectOneMenu id="serviceDesigService" value="#{utilisateurBean.nouveauUtilisateur.serviceIdService}"   required="true" requiredMessage="Le Service est obligatoire."  style="width: 350px">
+                                    
+                                        <f:selectItem noSelectionOption="true" itemLabel="Choisir le service" itemValue="" />  
+                                        <f:selectItems value="#{serviceBean.findAll()}" var="ser" itemValue="#{ser}"/>
+                                    </p:selectOneMenu> 
+                                    <p:growl id="growl" showDetail="true"  transient="true" /> 
+                                    <p:panelGrid columns="2">
+                                        <p:commandButton id="valider" actionListener="#{utilisateurBean.AjouterUtilisateur()}" update="growl"  value="Ajouter" style="color: blue " ajax="false"/>
+                                        <h:link  value="Liste des utilisateurs" outcome="listUtilisateur" title="Liste des utilisateurs" style="color: blue "  />
+
+                                    </p:panelGrid>
+                                </p:panelGrid>
+                            </center>
+                        </h:form>
+                    </p:tab>
+
+
+                    
+
+                    <p:tab id="tab2" title="Gestion des fonctions" titletip="Gérer les fonctions" >
+                        <h:form id="form2" style="width: 400px">
+                            <h2 style="color: darkblue"> <center><h:outputText value="Gérer les fonctions"/> </center></h2>
+
+                            <p:dataTable id="fonc" var="fonc" value="#{fonctionBean.fonctionList}" editable="true"  >
+                                <p:ajax event="rowEdit" listener="#{fonctionBean.onEdit}" update=":tabView:form2:growls" />  
+                                <p:ajax event="rowEditCancel" listener="#{fonctionBean.onCancel}" update=":tabView:form2:growls" /> 
+                                <p:column headerText="id fonction" filterBy="#{fonc.idFct}">
+                                    #{fonc.idFct}
+                                </p:column>
+                                <p:column headerText="fonction" filterBy="#{fonc.desigFct}">
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{fonc.desigFct}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{fonc.desigFct}" style="width:100%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor> 
+
+                                </p:column>
+
+                                <p:column style="width:6%">  
+                                    <p:rowEditor  />  
+                                    
+                                </p:column> 
+           
+                            </p:dataTable> 
+
+
+                            <p:inputText id="desigFonc" value="#{fonctionBean.fonction.desigFct}"  required="true" style="width: 255px;" />
+                            <p:growl id="growls" showDetail="true"  transient="true"     /> 
+
+                            <p:commandButton  value="Ajouter" actionListener="#{fonctionBean.create()}"  update="growls" style="position: relative; left: 30px;"  />
+                        </h:form>
+                    </p:tab> 
+
+
+
+                    
+
+                    <p:tab id="tab3" title="Gestion des Services" titletip="Gérer les services " >
+                        <h:form id="form" style="width: 600px">
+                            <h2 style="color: darkblue"> <center><h:outputText value="Gérer les services"/> </center></h2>
+                            <p:contextMenu for="ser">
+
+                                <p:menuitem value="Delete" update="ser" icon="ui-icon-close" actionListener="#{serviceBean.remove()}" />
+                            </p:contextMenu>
+
+                            <p:dataTable id="ser" var="serv" value="#{serviceBean.serviceList}"  editable="true" >
+
+
+                                <p:ajax event="rowEdit" listener="#{serviceBean.onEdit}" update=":tabView:form2:growls :tabView:form2" />  
+                                <p:ajax event="rowEditCancel" listener="#{serviceBean.onCancel}" update=":tabView:form2:growls :tabView:form2" />
+
+                                <p:column headerText="id service" filterBy="#{serv.idService}">
+                                    #{serv.idService}
+                                </p:column>
+                                <p:column headerText="Service" filterBy="#{serv.desigService}">
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{serv.desigService}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{serv.desigService}" style="width:150%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor> 
+
+                                </p:column>
+                                <p:column headerText="nombre d'employer" filterBy="#{serv.nbrEmployer}">
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{serv.nbrEmployer}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{serv.nbrEmployer}" style="width:150%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column style="width:6%">  
+                                    <p:rowEditor  />  
+                                </p:column> 
+                            </p:dataTable> 
+
+                            <p:inputText value="#{serviceBean.service.desigService}"  required="true" />
+                            <p:inputText value="#{serviceBean.service.nbrEmployer}"  required="true" />
+
+                            <p:growl id="growls" showDetail="true"  transient="true"     /> 
+
+                            <p:commandButton value="Ajouter" action="#{serviceBean.create()}"  update="form ser growls" style="position: relative; left: 60px;" />
+                        </h:form>
+                    </p:tab> 
+
+
+
+                    <p:tab id="tab4" title="Gestion de Type de sortie" titletip="Gérer les type de sortie" rendered="true" >
+                        <h:form style="width: 500px"> 
+                            <h2 style="color: darkblue"> <center><h:outputText value="Gérer les types de sortie"/> </center></h2>
+
+                            <p:dataTable id="gb" value="#{typeSortieBean.sortielist}" var="type" style="width: 400px"  editable="true">
+                                <p:ajax event="rowEdit" listener="#{typeSortieBean.onEdit}" update=":tabView:form2:growls" />  
+                                <p:ajax event="rowEditCancel" listener="#{typeSortieBean.onCancel}" update=":tabView:form2:growls" />
+
+
+                                <p:column headerText="id service" filterBy="#{type.idTypeSortie}">
+                                    #{type.idTypeSortie}
+                                </p:column>
+                                <p:column headerText="Type sortie" filterBy="#{type.typeSortie}" style="width: 200px" >
+
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{type.typeSortie}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{type.typeSortie}" style="width:100%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor> 
+
+                                </p:column>
+                                <p:column style="width:6%">  
+                                    <p:rowEditor />  
+                                </p:column> 
+
+                            </p:dataTable>
+
+                            <p:inputText value="#{typeSortieBean.typeSortie.typeSortie}"  required="true" style="width: 230px" />
+                            <p:growl id="growlj" showDetail="true"  transient="true"     /> 
+
+                            <p:commandButton value="Ajouter" action="#{typeSortieBean.create()}"  update="gb growlj" style="width: 100px"  />
+                        </h:form>
+                    </p:tab> 
+
+
+
+                    <p:tab id="tab5" title="Gestion de Type de stage" titletip="Gérer les types de stage" rendered="true" >
+                        <h:form style="width: 500px"> 
+                            <h2 style="color: darkblue"> <center><h:outputText value="Gérer les types de stage"/> </center></h2>
+
+                            <p:dataTable id="gb" value="#{typeStageBean.stagelist}" var="typeS" style="width: 400px" editable="true">
+                                <p:ajax event="rowEdit" listener="#{typeStageBean.onEdit}" update=":tabView:form2:growls" />  
+                                <p:ajax event="rowEditCancel" listener="#{typeStageBean.onCancel}" update=":tabView:form2:growls" />
+
+                                <p:column headerText="id Type stage" filterBy="#{typeS.idtypeStage}">
+                                    #{typeS.idtypeStage} 
+
+                                </p:column> 
+                                <p:column headerText="Type de stage" filterBy="#{typeS.typeStage}" style="width: 200px" >
+
+
+                                    <p:cellEditor>  
+                                        <f:facet name="output">  
+                                            <h:outputText value="#{typeS.typeStage}" />  
+                                        </f:facet>  
+                                        <f:facet name="input">  
+                                            <p:inputText value="#{typeS.typeStage}" style="width:100%"/>  
+                                        </f:facet>  
+                                    </p:cellEditor> 
+
+                                </p:column>
+                                <p:column style="width:6%">  
+                                    <p:rowEditor />  
+                                </p:column> 
+
+                            </p:dataTable>
+
+                            <p:inputText value="#{typeStageBean.typeStage.typeStage}"  required="true" style="width: 230px" />
+                            <p:growl id="growlj" showDetail="true"  transient="true"     /> 
+
+                            <p:commandButton value="Ajouter" action="#{typeStageBean.create()}"  update="gb,growlj" style="width: 100px"  />
+                        </h:form>
+                    </p:tab> 
+
+
+
+                </p:tabView>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+
+
+
+
+
+
+
+
+
+
+    
+    <script type="text/javascript">
+        /**
+         * Bean validator for @Email
+         */
+        PrimeFaces.validator['Email'] = {
+            pattern: /\S+@\S+/,
+            MESSAGE_ID: 'org.primefaces.examples.validate.email.message',
+            validate: function(element, value) {
+                var vc = PrimeFaces.util.ValidationContext;
+
+                if (!this.pattern.test(value)) {
+                    var msgStr = element.data('p-email-msg'),
+                            msg = msgStr ? {summary: msgStr, detail: msgStr} : vc.getMessage(this.MESSAGE_ID);
+
+                    throw msg;
+                }
+            }
+        };
+    </script>
+</html>
+
